@@ -95,8 +95,9 @@ const upsert = async (body, res) => {
 
   switch (table) {
     case 'messages':
-      text = 'INSERT INTO messages(id, created_at, message, name) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO UPDATE SET created_at = EXCLUDED.created_at, name = EXCLUDED.name'
-      values = [data.id, data.created_at, data.message, data.name];
+      text =
+        'INSERT INTO messages(id, created_at, message, name, "group") VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET created_at = EXCLUDED.created_at, name = EXCLUDED.name';
+      values = [data.id, data.created_at, data.message, data.name, data.group];
       break;
     default:
       break;

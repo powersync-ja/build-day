@@ -1,5 +1,5 @@
 import { usePowerSync, useQuery } from '@powersync/react';
-import { Box, TextField, IconButton, styled } from '@mui/material';
+import { Box, TextField, IconButton } from '@mui/material';
 import React, { useEffect } from 'react';
 import { NavigationPage } from '@/components/navigation/NavigationPage';
 import { USERS_TABLE, Users } from '@/library/powersync/AppSchema';
@@ -30,7 +30,7 @@ export default function UserPage() {
     if (user) {
       navigate(MESSAGES_ROUTE);
     }
-  });
+  }, [user]);
 
   return (
     <NavigationPage title="User">
@@ -42,13 +42,4 @@ export default function UserPage() {
       </Box>
     </NavigationPage>
   );
-}
-
-namespace S {
-  export const PowerSyncLogo = styled('img')`
-    max-width: 250px;
-    max-height: 250px;
-    object-fit: contain;
-    padding: 20px;
-  `;
 }
