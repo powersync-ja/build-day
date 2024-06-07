@@ -1,6 +1,6 @@
 {
-  "name": "@powersync/react-custom-auth-todolist",
-  "version": "0.2.3",
+  "name": "chat-app",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",

@@ -31,9 +31,6 @@ export function MessagesWidget() {
           name={message.name ?? ''}
           message={message.message!}
           onDelete={() => deleteMessage(message.id)}
-          onPress={() => {
-            navigate(MESSAGES_ROUTE + '/' + message.id);
-          }}
         />
       ))}
     </List>

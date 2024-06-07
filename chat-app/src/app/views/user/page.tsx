@@ -1,10 +1,11 @@
 import { usePowerSync, useQuery } from '@powersync/react';
-import { Box, DialogContentText, TextField, Button } from '@mui/material';
+import { Box, TextField, IconButton, styled } from '@mui/material';
 import React, { useEffect } from 'react';
 import { NavigationPage } from '@/components/navigation/NavigationPage';
 import { USERS_TABLE, Users } from '@/library/powersync/AppSchema';
 import { useNavigate } from 'react-router-dom';
 import { MESSAGES_ROUTE } from '../../router';
+import AddIcon from '@mui/icons-material/Save';
 
 export default function UserPage() {
   const powerSync = usePowerSync();
@@ -33,18 +34,21 @@ export default function UserPage() {
 
   return (
     <NavigationPage title="User">
-      <Box>
-        <DialogContentText id="alert-dialog-description">Enter a name</DialogContentText>
-        <TextField
-          sx={{ marginTop: '10px' }}
-          onChange={(event) => setName(event.target.value)}
-          label="Message"
-          autoFocus
-        />
-        <Button disabled={name.length < 3} onClick={() => createUser(name)}>
-          Save
-        </Button>
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} flexDirection={'row'}>
+        <TextField label="Enter your name" fullWidth onChange={(event) => setName(event.target.value)} autoFocus />
+        <IconButton disabled={name.length < 3} onClick={() => createUser(name)}>
+          <AddIcon color="primary" sx={{ fontSize: 40 }} />
+        </IconButton>
       </Box>
     </NavigationPage>
   );
+}
+
+namespace S {
+  export const PowerSyncLogo = styled('img')`
+    max-width: 250px;
+    max-height: 250px;
+    object-fit: contain;
+    padding: 20px;
+  `;
 }

@@ -17,7 +17,6 @@ type Props = {
   name: string;
   message: string;
   onDelete: () => void;
-  onPress: () => void;
 };
 
 export const MessageWidget: React.FC<Props> = ({ name, message, onDelete }) => {

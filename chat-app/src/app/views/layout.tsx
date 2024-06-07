@@ -70,18 +70,24 @@ export default function ViewsLayout({ children }: { children: React.ReactNode })
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={() => setOpenDrawer(!openDrawer)}>
+            onClick={() => setOpenDrawer(!openDrawer)}
+          >
             <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }}>
             <Typography>{title}</Typography>
           </Box>
-          <NorthIcon
-            sx={{ marginRight: '-10px' }}
-            color={syncStatus?.dataFlowStatus.uploading ? 'primary' : 'inherit'}
-          />
-          <SouthIcon color={syncStatus?.dataFlowStatus.downloading ? 'primary' : 'inherit'} />
-          {syncStatus?.connected ? <WifiIcon /> : <SignalWifiOffIcon />}
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+            <S.PowerSyncLogo2 alt="PowerSync Logo" width={250} height={30} src="/powersync-logo.svg" />
+          </Box>
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            <NorthIcon
+              sx={{ marginRight: '-10px' }}
+              color={syncStatus?.dataFlowStatus.uploading ? 'primary' : 'inherit'}
+            />
+            <SouthIcon color={syncStatus?.dataFlowStatus.downloading ? 'primary' : 'inherit'} />
+            {syncStatus?.connected ? <WifiIcon /> : <SignalWifiOffIcon />}
+          </Box>
         </Toolbar>
       </S.TopBar>
       <Drawer anchor={'left'} open={openDrawer} onClose={() => setOpenDrawer(false)}>
@@ -94,7 +100,8 @@ export default function ViewsLayout({ children }: { children: React.ReactNode })
                 onClick={async () => {
                   navigate(item.path);
                   setOpenDrawer(false);
-                }}>
+                }}
+              >
                 <ListItemIcon>{item.icon()}</ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItemButton>
@@ -121,5 +128,9 @@ namespace S {
     max-height: 250px;
     object-fit: contain;
     padding: 20px;
+  `;
+
+  export const PowerSyncLogo2 = styled('img')`
+    object-fit: contain;
   `;
 }
