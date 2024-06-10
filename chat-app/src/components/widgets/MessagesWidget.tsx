@@ -1,13 +1,10 @@
-import { MESSAGES_ROUTE } from '@/app/router';
-import { MESSAGES_TABLE, Messages, USERS_TABLE } from '@/library/powersync/AppSchema';
+import { MESSAGES_TABLE, Messages, USERS_TABLE, Users } from '@/library/powersync/AppSchema';
 import { List } from '@mui/material';
 import { usePowerSync, useQuery } from '@powersync/react';
-import { useNavigate } from 'react-router-dom';
 import { MessageWidget } from './MessageWidget';
 
 export function MessagesWidget() {
   const powerSync = usePowerSync();
-  const navigate = useNavigate();
 
   const { data: messages } = useQuery<Messages>(`
       SELECT
@@ -15,6 +12,14 @@ export function MessagesWidget() {
       FROM
         ${MESSAGES_TABLE}
       `);
+
+  const { data: users } = useQuery<Users>(`
+      SELECT
+        ${USERS_TABLE}.*
+      FROM
+        ${USERS_TABLE}
+      `);
+  const user = users?.[0];
 
   const deleteMessage = async (id: string) => {
     await powerSync.writeTransaction(async (db) => {
@@ -29,6 +34,7 @@ export function MessagesWidget() {
         <MessageWidget
           key={message.id}
           name={message.name ?? ''}
+          isUserMessage={user?.name === message.name}
           message={message.message!}
           onDelete={() => deleteMessage(message.id)}
         />
