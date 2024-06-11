@@ -20,14 +20,6 @@
 #   # Migrations can be triggered externally by altering the container `command`.
 #   disable_auto_migration: true
 
-# Settings for telemetry reporting
-# See https://docs.powersync.com/self-hosting/telemetry
-telemetry:
-  # Opt out of reporting to PowerSync telemetry service
-  disable_telemetry_sharing: false
-  # Additional Open Telemetry metrics endpoints
-  client_endpoints: []
-
 # Settings for source database replication
 replication:
   # Specify database connection details
