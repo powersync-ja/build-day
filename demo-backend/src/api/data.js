@@ -67,19 +67,19 @@ router.delete('/', async (req, res) => {
     return;
   }
 
-  let text = null;
+  let sql = null;
   const values = [data.id];
 
   switch (table) {
     case 'messages':
-      text = 'DELETE FROM messages WHERE id = $1';
+      sql = 'DELETE FROM messages WHERE id = $1';
       break;
     default:
       break;
   }
 
   const client = await pool.connect();
-  await client.query(text, values);
+  await client.query(sql, values);
   await client.release();
   res.status(200).send({
     message: `PUT completed for ${table} ${data.id}`
@@ -90,21 +90,21 @@ const upsert = async (body, res) => {
   const table = body.table;
   const data = body.data;
 
-  let text = null;
+  let sql = null;
   let values = [];
 
   switch (table) {
     case 'messages':
-      text =
+      sql =
         'INSERT INTO messages(id, created_at, message, name, "group") VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET created_at = EXCLUDED.created_at, name = EXCLUDED.name';
       values = [data.id, data.created_at, data.message, data.name, data.group];
       break;
     default:
       break;
   }
-  if (text && values.length > 0) {
+  if (sql && values.length > 0) {
     const client = await pool.connect();
-    await client.query(text, values);
+    await client.query(sql, values);
     await client.release();
     res.status(200).send({
       message: `PUT completed for ${table} ${data.id}`
