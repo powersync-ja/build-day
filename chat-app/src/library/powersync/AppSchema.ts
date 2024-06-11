@@ -3,7 +3,6 @@ import { column, Schema, TableV2 } from '@powersync/web';
 export const MESSAGES_TABLE = 'messages';
 export const USERS_TABLE = 'users';
 
-// Potentially add user pic using attachments
 const users = new TableV2(
   {
     name: column.text,
