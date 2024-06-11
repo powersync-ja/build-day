@@ -6,17 +6,12 @@ Learn more about self-hosting PowerSync [here](https://docs.powersync.com/self-h
 
 # Run
 
-Get backend and PowerSync set up by running:
+Get the app, backend and PowerSync set up by running:
 
-```bash
-docker compose up
-```
-
-In a new terminal get the frontend started with:
-
-```bash
-cd chat-app && pnpm i && pnpm start
-```
+1. Run `cp .env.template .env`
+2. Set the appropriate env variables
+3. Run `docker compose up` to get the backend and powersync service started.
+4. In a new terminal run `cd chat-app && pnpm i && pnpm start` to get the frontend started.
 
 # Config
 
