@@ -23,15 +23,14 @@ import {
 import React from 'react';
 
 import { useNavigationPanel } from '@/components/navigation/NavigationPanelContext';
-import { usePowerSync } from '@powersync/react';
+import { usePowerSync, useStatus } from '@powersync/react';
 import { useNavigate } from 'react-router-dom';
 import { SQL_CONSOLE_ROUTE, MESSAGES_ROUTE } from '@/app/router';
 
 export default function ViewsLayout({ children }: { children: React.ReactNode }) {
   const powerSync = usePowerSync();
+  const status = useStatus();
   const navigate = useNavigate();
-
-  const [syncStatus, setSyncStatus] = React.useState(powerSync.currentStatus);
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const { title } = useNavigationPanel();
 
@@ -50,15 +49,6 @@ export default function ViewsLayout({ children }: { children: React.ReactNode })
     ],
     [powerSync]
   );
-
-  React.useEffect(() => {
-    const l = powerSync.registerListener({
-      statusChanged: (status) => {
-        setSyncStatus(status);
-      }
-    });
-    return () => l?.();
-  }, [powerSync]);
 
   return (
     <S.MainBox>
@@ -81,12 +71,9 @@ export default function ViewsLayout({ children }: { children: React.ReactNode })
             <S.PowerSyncLogo2 alt="PowerSync Logo" width={250} height={30} src="/powersync-logo.svg" />
           </Box>
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-            <NorthIcon
-              sx={{ marginRight: '-10px' }}
-              color={syncStatus?.dataFlowStatus.uploading ? 'primary' : 'inherit'}
-            />
-            <SouthIcon color={syncStatus?.dataFlowStatus.downloading ? 'primary' : 'inherit'} />
-            {syncStatus?.connected ? <WifiIcon /> : <SignalWifiOffIcon />}
+            <NorthIcon sx={{ marginRight: '-10px' }} color={status?.dataFlowStatus.uploading ? 'primary' : 'inherit'} />
+            <SouthIcon color={status?.dataFlowStatus.downloading ? 'primary' : 'inherit'} />
+            {status?.connected ? <WifiIcon /> : <SignalWifiOffIcon />}
           </Box>
         </Toolbar>
       </S.TopBar>
