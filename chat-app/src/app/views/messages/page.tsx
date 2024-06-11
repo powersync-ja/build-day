@@ -3,13 +3,20 @@ import { Box } from '@mui/material';
 import React from 'react';
 import { NavigationPage } from '@/components/navigation/NavigationPage';
 import { MessagesWidget } from '@/components/widgets/MessagesWidget';
-import { MESSAGES_TABLE, Users } from '@/library/powersync/AppSchema';
+import { MESSAGES_TABLE, Message, USERS_TABLE, User } from '@/library/powersync/AppSchema';
 import { AddMessageWidget } from '../../../components/widgets/AddMessageWidget';
 
 export default function MessagesPage() {
   const powerSync = usePowerSync();
-  const { data: users } = useQuery<Users>('SELECT * FROM users');
+  const { data: users } = useQuery<User>(`SELECT * FROM ${USERS_TABLE}`);
   const user = users?.[0];
+  const { data: messages } = useQuery<Message>(`SELECT * FROM ${MESSAGES_TABLE}`);
+
+  const deleteMessage = async (id: string) => {
+    await powerSync.writeTransaction(async (db) => {
+      await db.execute(`DELETE FROM ${MESSAGES_TABLE} WHERE id = ?`, [id]);
+    });
+  };
 
   const createMessage = async (message: string) => {
     const randomGroup = Math.random() < 0.5 ? 1 : 2;
@@ -39,7 +46,7 @@ export default function MessagesPage() {
             overflowY: 'auto'
           }}
         >
-          <MessagesWidget />
+          <MessagesWidget onDelete={(id) => deleteMessage(id)} messages={messages} user={user} />
         </Box>
         <Box
           sx={{

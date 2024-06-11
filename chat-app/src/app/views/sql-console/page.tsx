@@ -3,8 +3,9 @@ import { Box, Button, Grid, TextField, styled } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { useQuery } from '@powersync/react';
 import React from 'react';
+import { MESSAGES_TABLE } from '../../../library/powersync/AppSchema';
 
-const DEFAULT_QUERY = 'SELECT * FROM messages';
+const DEFAULT_QUERY = `SELECT * FROM ${MESSAGES_TABLE}`;
 
 export default function SQLConsolePage() {
   const inputRef = React.useRef<HTMLInputElement>();

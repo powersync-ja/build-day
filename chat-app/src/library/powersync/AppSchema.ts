@@ -25,5 +25,6 @@ export const AppSchema = new Schema({
 });
 
 export type Database = (typeof AppSchema)['types'];
-export type Messages = Database['messages'];
-export type Users = Database['users'];
+export type Message = Database['messages'];
+export type Messages = Message[];
+export type User = Database['users'];

@@ -2,7 +2,7 @@ import { usePowerSync, useQuery } from '@powersync/react';
 import { Box, TextField, IconButton } from '@mui/material';
 import React, { useEffect } from 'react';
 import { NavigationPage } from '@/components/navigation/NavigationPage';
-import { USERS_TABLE, Users } from '@/library/powersync/AppSchema';
+import { USERS_TABLE, User } from '@/library/powersync/AppSchema';
 import { useNavigate } from 'react-router-dom';
 import { MESSAGES_ROUTE } from '../../router';
 import AddIcon from '@mui/icons-material/Save';
@@ -10,7 +10,7 @@ import AddIcon from '@mui/icons-material/Save';
 export default function UserPage() {
   const powerSync = usePowerSync();
   const navigate = useNavigate();
-  const { data: users } = useQuery<Users>('SELECT * FROM users');
+  const { data: users } = useQuery<User>(`SELECT * FROM ${USERS_TABLE}`);
   const user = users?.[0];
   const [name, setName] = React.useState('');
 
