@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=../schema/schema.json
-
 # Note that this example uses YAML custom tags for environment variable substitution.
 # Using `!env [variable name]` will substitute the value of the environment variable named
 # [variable name].
