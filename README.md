@@ -35,10 +35,8 @@ The `key-generator` project demonstrates generating RSA key pairs for token sign
 
 # Cleanup
 
-The `setup.sql` script only runs on the first initialization of the container.
-
 If you want to start from a fresh start:
 
-- Delete the Docker volumes `mongo_storage` and `db_data`
-  Their full names might vary depending on the directory where the `docker-compose` command was executed.
+- Delete the Docker volumes `mongo_storage`
+  The full name might vary depending on the directory where the `docker-compose` command was executed.
 - Delete the service Docker containers.
