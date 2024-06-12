@@ -1,9 +1,8 @@
 {
-  "name": "powersync-nodejs-backend-todolist-demo",
-  "version": "1.0.0",
+  "name": "demo-backend",
+  "version": "0.0.0",
   "main": "index.js",
   "type": "module",
-  "author": "Mike Barnes <michael@journeyapps.com>",
   "scripts": {
     "start": "node index.js",
     "format": "prettier --write ."
