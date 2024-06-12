@@ -1,34 +1,21 @@
-import { usePowerSync, useQuery } from '@powersync/react';
 import { Box } from '@mui/material';
-import React from 'react';
-import { NavigationPage } from '@/components/navigation/NavigationPage';
-import { MessagesWidget } from '@/components/widgets/MessagesWidget';
-import { MESSAGES_TABLE, Message, USERS_TABLE, User } from '@/library/powersync/AppSchema';
-import { AddMessageWidget } from '../../../components/widgets/AddMessageWidget';
+import React, { useState } from 'react';
+import { NavigationPage } from '@/navigation/NavigationPage';
+import { MessagesWidget } from '@/widgets/MessagesWidget';
+import { AddMessageWidget } from '@/widgets/AddMessageWidget';
 
 export default function MessagesPage() {
-  const powerSync = usePowerSync();
-  const { data: users } = useQuery<User>(`SELECT * FROM ${USERS_TABLE}`);
-  const user = users?.[0];
-  const { data: messages } = useQuery<Message>(`SELECT * FROM ${MESSAGES_TABLE}`);
+  // Basic user and messages data
+  // Will be changed to use PowerSync
+  const user = { name: 'John Doe' };
+  const [messages, setMessages] = useState([{ id: '1', name: 'John Doe', message: 'Hello World' }]);
 
   const deleteMessage = async (id: string) => {
-    await powerSync.writeTransaction(async (db) => {
-      await db.execute(`DELETE FROM ${MESSAGES_TABLE} WHERE id = ?`, [id]);
-    });
+    setMessages((prev) => prev.filter((message) => message.id !== id));
   };
 
   const createMessage = async (message: string) => {
-    const randomGroup = Math.random() < 0.5 ? 1 : 2;
-    const res = await powerSync.execute(
-      `INSERT INTO ${MESSAGES_TABLE} (id, created_at, message, name, "group") VALUES (uuid(), datetime(), ?, ?, ?) RETURNING *`,
-      [message, user.name, randomGroup]
-    );
-
-    const resultRecord = res.rows?.item(0);
-    if (!resultRecord) {
-      throw new Error('Could not create message');
-    }
+    setMessages((prev) => [...prev, { id: `${prev.length + 1}`, name: user.name, message }]);
   };
 
   return (

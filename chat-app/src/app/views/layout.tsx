@@ -22,14 +22,11 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-import { useNavigationPanel } from '@/components/navigation/NavigationPanelContext';
-import { usePowerSync, useStatus } from '@powersync/react';
+import { useNavigationPanel } from '@/navigation/NavigationPanelContext';
 import { useNavigate } from 'react-router-dom';
 import { SQL_CONSOLE_ROUTE, MESSAGES_ROUTE } from '@/app/router';
 
 export default function ViewsLayout({ children }: { children: React.ReactNode }) {
-  const powerSync = usePowerSync();
-  const status = useStatus();
   const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const { title } = useNavigationPanel();
@@ -47,7 +44,7 @@ export default function ViewsLayout({ children }: { children: React.ReactNode })
         icon: () => <ChecklistRtlIcon />
       }
     ],
-    [powerSync]
+    []
   );
 
   return (
@@ -70,11 +67,11 @@ export default function ViewsLayout({ children }: { children: React.ReactNode })
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
             <S.PowerSyncLogo2 alt="PowerSync Logo" width={250} height={30} src="/powersync-logo.svg" />
           </Box>
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+          {/* <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <NorthIcon sx={{ marginRight: '-10px' }} color={status?.dataFlowStatus.uploading ? 'primary' : 'inherit'} />
             <SouthIcon color={status?.dataFlowStatus.downloading ? 'primary' : 'inherit'} />
             {status?.connected ? <WifiIcon /> : <SignalWifiOffIcon />}
-          </Box>
+          </Box> */}
         </Toolbar>
       </S.TopBar>
       <Drawer anchor={'left'} open={openDrawer} onClose={() => setOpenDrawer(false)}>

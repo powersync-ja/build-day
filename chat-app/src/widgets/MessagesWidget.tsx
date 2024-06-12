@@ -1,10 +1,9 @@
-import { Messages, User } from '@/library/powersync/AppSchema';
 import { List } from '@mui/material';
 import { MessageWidget } from './MessageWidget';
 
 interface Props {
-  user: User;
-  messages: Messages;
+  user: any;
+  messages: any[];
   onDelete: (id: string) => void;
 }
 

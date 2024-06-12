@@ -1,29 +1,17 @@
-import { usePowerSync, useQuery } from '@powersync/react';
 import { Box, TextField, IconButton } from '@mui/material';
 import React, { useEffect } from 'react';
-import { NavigationPage } from '@/components/navigation/NavigationPage';
-import { USERS_TABLE, User } from '@/library/powersync/AppSchema';
+import { NavigationPage } from '@/navigation/NavigationPage';
 import { useNavigate } from 'react-router-dom';
 import { MESSAGES_ROUTE } from '../../router';
 import AddIcon from '@mui/icons-material/Save';
 
 export default function UserPage() {
-  const powerSync = usePowerSync();
   const navigate = useNavigate();
-  const { data: users } = useQuery<User>(`SELECT * FROM ${USERS_TABLE}`);
-  const user = users?.[0];
+  const user = { name: 'John Doe' };
   const [name, setName] = React.useState('');
 
   const createUser = async (name: string) => {
-    const res = await powerSync.execute(
-      `INSERT INTO ${USERS_TABLE} (id, created_at, name) VALUES (uuid(), datetime(), ?) RETURNING *`,
-      [name]
-    );
-
-    const resultRecord = res.rows?.item(0);
-    if (!resultRecord) {
-      throw new Error('Could not create user');
-    }
+    // TO BE IMPLEMENTED
   };
 
   useEffect(() => {

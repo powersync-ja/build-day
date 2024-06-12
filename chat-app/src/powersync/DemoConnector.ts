@@ -66,11 +66,11 @@ export class DemoConnector implements PowerSyncBackendConnector {
     try {
       // Note: If transactional consistency is important, use database functions
       // or edge functions to process the entire transaction in a single call.
-      for (let operation of transaction.crud) {
+      for (const operation of transaction.crud) {
         lastOp = operation;
         const { op: opType, table } = operation;
 
-        let payload: any = {
+        const payload: any = {
           table,
           data: {
             id: operation.id
