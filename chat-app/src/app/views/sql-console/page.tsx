@@ -2,26 +2,29 @@ import { NavigationPage } from '@/navigation/NavigationPage';
 import { Box, Button, Grid, TextField, styled } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import React from 'react';
+import { MESSAGES_TABLE } from '../../../powersync/AppSchema';
+import { useQuery } from '@powersync/react';
 
-const DEFAULT_QUERY = ``;
+const DEFAULT_QUERY = `SELECT * FROM ${MESSAGES_TABLE}`;
 
 export default function SQLConsolePage() {
   const inputRef = React.useRef<HTMLInputElement>();
   const [query, setQuery] = React.useState(DEFAULT_QUERY);
+  const { data: querySQLResult } = useQuery(query);
 
-  // const queryDataGridResult = React.useMemo(() => {
-  //   const firstItem = querySQLResult?.[0];
+  const queryDataGridResult = React.useMemo(() => {
+    const firstItem = querySQLResult?.[0];
 
-  //   return {
-  //     columns: firstItem
-  //       ? Object.keys(firstItem).map((field) => ({
-  //           field,
-  //           flex: 1
-  //         }))
-  //       : [],
-  //     rows: querySQLResult
-  //   };
-  // }, [querySQLResult]);
+    return {
+      columns: firstItem
+        ? Object.keys(firstItem).map((field) => ({
+            field,
+            flex: 1
+          }))
+        : [],
+      rows: querySQLResult
+    };
+  }, [querySQLResult]);
 
   return (
     <NavigationPage title="SQL Console">
@@ -57,7 +60,7 @@ export default function SQLConsolePage() {
           </S.CenteredGrid>
         </S.CenteredGrid>
 
-        {/* {queryDataGridResult ? (
+        {queryDataGridResult ? (
           <S.QueryResultContainer>
             {queryDataGridResult.columns ? (
               <DataGrid
@@ -76,7 +79,7 @@ export default function SQLConsolePage() {
               />
             ) : null}
           </S.QueryResultContainer>
-        ) : null} */}
+        ) : null}
       </S.MainContainer>
     </NavigationPage>
   );
