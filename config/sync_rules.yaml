@@ -3,4 +3,4 @@
 bucket_definitions:
   global:
     data:
-      - SELECT * FROM messages
+      - SELECT * FROM messages WHERE "group" = 2
