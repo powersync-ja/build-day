@@ -4,14 +4,20 @@ import { NavigationPage } from '@/navigation/NavigationPage';
 import { useNavigate } from 'react-router-dom';
 import { MESSAGES_ROUTE } from '../../router';
 import AddIcon from '@mui/icons-material/Save';
+import { usePowerSync, useQuery } from '@powersync/react';
+import { USERS_TABLE, Users } from '../../../powersync/AppSchema';
 
 export default function UserPage() {
   const navigate = useNavigate();
-  const user = { name: 'John Doe' };
+
+  const powersync = usePowerSync();
+  const { data: users } = useQuery<Users>(`SELECT * FROM ${USERS_TABLE}`);
+  const user = users?.[0];
+
   const [name, setName] = React.useState('');
 
   const createUser = async (name: string) => {
-    // TO BE IMPLEMENTED
+    await powersync.execute(`INSERT INTO ${USERS_TABLE} (id, created_at, name) VALUES (uuid(), datetime(), ?)`, [name]);
   };
 
   useEffect(() => {
